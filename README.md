@@ -1,6 +1,8 @@
-# Spring Security Demo
+# Spring Security Demo Project
 
-**Important to Note!**. - This is not a important project, but a repository of a collection of experiments from doing online tutorials & playing around.  
-demo of how spring security works
+This project was built using https://docs.spring.io/spring-security/site/docs/4.1.3.RELEASE/ and https://www.youtube.com/watch?v=her_7pa0vrg
 
-Check each version for how a secure application might build up.
+I still have to learn about JWT which is something i shall visit in next version. For now I am pausing and building a social media application, under social bull on my GitHub.
+
+
+
