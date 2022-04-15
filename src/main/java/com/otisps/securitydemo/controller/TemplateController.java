@@ -13,8 +13,8 @@ public class TemplateController {
         return "login";
     }
 
-    @GetMapping("courses")
+    @GetMapping("landing")
     public String getCourses() {
-        return "courses";
+        return "landing";
     }
 }

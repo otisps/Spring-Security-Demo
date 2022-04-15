@@ -42,7 +42,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                     .loginPage("/login").permitAll()
-                    .defaultSuccessUrl("/courses", true)
+                    .defaultSuccessUrl("/landing", true)
                     .passwordParameter("password")
                     .usernameParameter("username")
                 .and()
