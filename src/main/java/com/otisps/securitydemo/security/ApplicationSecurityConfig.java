@@ -1,17 +1,16 @@
 package com.otisps.securitydemo.security;
 
+import com.otisps.securitydemo.auth.ApplicationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.concurrent.TimeUnit;
@@ -23,14 +22,12 @@ import static com.otisps.securitydemo.security.ApplicationUserRole.*;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired private final PasswordEncoder passwordEncoder;
-
-    @Autowired private final PasswordEncoder superSlowPasswordEncoder;
-
-
-    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, PasswordEncoder superSlowPasswordEncoder) {
+    private final PasswordEncoder passwordEncoder;
+    private final ApplicationUserService applicationUserService;
+    @Autowired
+    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, ApplicationUserService applicationUserService) {
         this.passwordEncoder = passwordEncoder;
-        this.superSlowPasswordEncoder = superSlowPasswordEncoder;
+        this.applicationUserService = applicationUserService;
     }
 
     @Override
@@ -64,22 +61,16 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Override
     @Bean
-    protected UserDetailsService userDetailsService() {
+    public DaoAuthenticationProvider daoAuthenticationProvider(){
+        DaoAuthenticationProvider  provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder);
+        provider.setUserDetailsService(applicationUserService);
+        return provider;
+    }
 
-        UserDetails otisUser=
-                User.builder()
-                        .username("otis.ps").password(passwordEncoder.encode("password"))
-                        .authorities(STUDENT.getGrantedAuthorities()).build();
-        UserDetails moriUser=
-                User.builder()
-                        .username("mori.ph").password(passwordEncoder.encode("password"))
-                        .authorities(ADMINTRAINEE.getGrantedAuthorities()).build();
-        UserDetails sherlockUser = User.builder()
-                .username("sherlock.ph").password(passwordEncoder.encode("password"))
-                .authorities(ADMIN.getGrantedAuthorities()).build();
-
-        return new InMemoryUserDetailsManager(otisUser, sherlockUser, moriUser);
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(daoAuthenticationProvider());
     }
 }
