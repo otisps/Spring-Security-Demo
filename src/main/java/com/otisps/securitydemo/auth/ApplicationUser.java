@@ -6,6 +6,29 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 public class ApplicationUser implements UserDetails {
+    private final Collection<? extends GrantedAuthority>  grantedAuthorities;
+    private final String password;
+    private final String username;
+    private final Boolean accountNonExpired;
+    private final Boolean accountNonLocked;
+    private final Boolean credentialsNonExpired;
+    private final Boolean enabled;
+
+    public ApplicationUser(Collection<? extends GrantedAuthority> grantedAuthorities,
+                           String password, String username,
+                           Boolean accountNonExpired,
+                           Boolean accountNonLocked,
+                           Boolean credentialsNonExpired,
+                           Boolean enabled) {
+        this.grantedAuthorities = grantedAuthorities;
+        this.password = password;
+        this.username = username;
+        this.accountNonExpired = accountNonExpired;
+        this.accountNonLocked = accountNonLocked;
+        this.credentialsNonExpired = credentialsNonExpired;
+        this.enabled = enabled;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -13,31 +36,31 @@ public class ApplicationUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return credentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return enabled;
     }
 }
