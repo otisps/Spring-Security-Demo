@@ -30,7 +30,7 @@ public class FakeApplicationUserDaoService implements ApplicationUserDao{
 
     private List<ApplicationUser> getApplicationUsers(){
         List<ApplicationUser> applicationUsers;
-        
+
         applicationUsers = Lists.newArrayList(
                 new ApplicationUser(
                         "otis.ps",
