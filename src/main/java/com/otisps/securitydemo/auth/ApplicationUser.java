@@ -6,23 +6,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 public class ApplicationUser implements UserDetails {
-    private final Collection<? extends GrantedAuthority>  grantedAuthorities;
-    private final String password;
     private final String username;
+    private final String password;
+    private final Collection<? extends GrantedAuthority>  grantedAuthorities;
     private final Boolean accountNonExpired;
     private final Boolean accountNonLocked;
     private final Boolean credentialsNonExpired;
     private final Boolean enabled;
 
-    public ApplicationUser(Collection<? extends GrantedAuthority> grantedAuthorities,
-                           String password, String username,
+    public ApplicationUser(String username,
+                           String password,
+                           Collection<? extends GrantedAuthority> grantedAuthorities,
                            Boolean accountNonExpired,
                            Boolean accountNonLocked,
                            Boolean credentialsNonExpired,
                            Boolean enabled) {
-        this.grantedAuthorities = grantedAuthorities;
-        this.password = password;
         this.username = username;
+        this.password = password;
+        this.grantedAuthorities = grantedAuthorities;
         this.accountNonExpired = accountNonExpired;
         this.accountNonLocked = accountNonLocked;
         this.credentialsNonExpired = credentialsNonExpired;

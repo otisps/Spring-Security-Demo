@@ -80,7 +80,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .username("sherlock.ph").password(passwordEncoder.encode("password"))
                 .authorities(ADMIN.getGrantedAuthorities()).build();
 
-
         return new InMemoryUserDetailsManager(otisUser, sherlockUser, moriUser);
     }
 }
