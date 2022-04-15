@@ -67,6 +67,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     @Bean
     protected UserDetailsService userDetailsService() {
+
         UserDetails otisUser=
                 User.builder()
                         .username("otis.ps").password(passwordEncoder.encode("password"))
